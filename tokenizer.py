@@ -5,6 +5,7 @@ from nltk.tokenize import RegexpTokenizer
 from nltk.stem import PorterStemmer
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
+from nltk.probability import FreqDist 
 tokenizer = RegexpTokenizer(r'\w+')
 lemmatizer = WordNetLemmatizer()
 stemmer = PorterStemmer()
@@ -33,4 +34,4 @@ for file in files.fileids():
   words = map(lowercase, tokenizer.tokenize(text))
   words = filter(stopping, words)
   words = map(stemming, words)
-  bag_of_words[file] = words 
+  bag_of_words[file] = FreqDist(words)
