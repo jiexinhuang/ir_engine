@@ -1,5 +1,6 @@
 # Create bag of words representation of documents
-
+from __future__ import division
+from math import log
 from nltk.corpus import PlaintextCorpusReader
 from nltk.tokenize import RegexpTokenizer
 from nltk.stem import PorterStemmer
@@ -27,6 +28,8 @@ document_root = proj_root + 'small'
 files = PlaintextCorpusReader(document_root, '.*\.txt')
 
 bag_of_words = {}
+idf = {}
+N = len(files.fileids())
 
 for file in files.fileids():
   text = files.raw(file)
@@ -34,4 +37,12 @@ for file in files.fileids():
   words = map(lowercase, tokenizer.tokenize(text))
   words = filter(stopping, words)
   words = map(stemming, words)
-  bag_of_words[file] = FreqDist(words)
+  words = FreqDist(words)
+  bag_of_words[file] = words
+  for word, freq in words.iteritems():
+    if idf.has_key(word):
+      idf[word] += 1
+    else:
+      idf[word]  = 1
+
+idf = { term: log(N/dft) for term, dft in idf.iteritems() }
