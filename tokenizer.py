@@ -27,7 +27,7 @@ document_root = proj_root + 'small'
 # Use tokenizer to remove puntuations
 files = PlaintextCorpusReader(document_root, '.*\.txt')
 
-bag_of_words = {}
+posting = {}
 idf = {}
 N = len(files.fileids())
 
@@ -38,11 +38,14 @@ for file in files.fileids():
   words = filter(stopping, words)
   words = map(stemming, words)
   words = FreqDist(words)
-  bag_of_words[file] = words
   for word, freq in words.iteritems():
     if idf.has_key(word):
       idf[word] += 1
     else:
       idf[word]  = 1
+
+    if not posting.has_key(word):
+      posting[word] = {}
+    posting[word][file] = freq
 
 idf = { term: log(N/dft) for term, dft in idf.iteritems() }
