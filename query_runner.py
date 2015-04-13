@@ -1,23 +1,41 @@
+from __future__ import division
 import pickle
 from text_processor import process
+from math import log
+from math import sqrt
 
-query_pkl = open('query.pkl', 'rb')
-queries = pickle.load(query_pkl)
+class QueryRunner:
+    def __init__(self, result_length):
+        self.result_length = result_length
+        # Load all pkl files into memery to indexing
+        posting_pkl = open('posting.pkl', 'rb')
+        self.posting = pickle.load(posting_pkl)
 
-qrel_pkl = open('qrel.pkl', 'rb')
-qrels = pickle.load(qrel_pkl)
+        idf_pkl = open('idf.pkl', 'rb')
+        self.idfs = pickle.load(idf_pkl)
+        self.N = len(self.idfs)
 
-posting_pkl = open('posting.pkl', 'rb')
-posting = pickle.load(posting_pkl)
+        file_length_pkl = open('file_length.pkl', 'rb')
+        self.file_length = pickle.load(file_length_pkl)
 
-idf_pkl = open('idf.pkl', 'rb')
-idf = pickle.load(idf_pkl)
+        posting_pkl.close()
+        idf_pkl.close()
+        file_length_pkl.close()
 
-file_length_pkl = open('file_length.pkl', 'rb')
-file_length = pickle.load(file_length_pkl)
+    def search(self, query):
+        result = {}
+        terms = process(query)
+        for term, qtf in terms.iteritems():
+            if self.idfs.has_key(term):
+                idft = log(self.N/self.idfs[term])
+                for document, dft in self.posting[term].iteritems():
+                    normalization = sqrt(self.file_length[document])
+                    dft = dft/normalization
+                    if result.has_key(document):
+                        result[document] += dft*idft
+                    else:
+                        result[document] = dft*idft
+        return [ (doc, result[doc]) for doc in sorted(result, key=result.get, reverse=True)]
 
-query_pkl.close()
-qrel_pkl.close()
-posting_pkl.close()
-idf_pkl.close()
-file_length_pkl.close()
+qr = QueryRunner(20)
+qr.search('penguin')
