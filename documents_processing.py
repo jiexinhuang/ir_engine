@@ -1,6 +1,6 @@
 from documents import Documents
 
-root = '/Users/jiejingdu/Unimelb/ir_proj1/blogs'
+root = '/home/jason/ir_engine/blogs'
 
 documents = Documents(root)
 documents.process()

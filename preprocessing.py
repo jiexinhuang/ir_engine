@@ -1,2 +1,2 @@
-import query_processor
+import query_processing
 import documents_processing
