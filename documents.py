@@ -15,10 +15,11 @@ class Documents:
 
     def process(self):
         for file in self.files.fileids():
+            filename = file.strip('.txt')
             text = self.files.raw(file)
             words = process(text)
             if words.values():
-                self.file_length[file] = normalization(words.values())
+                self.file_length[filename] = normalization(words.values())
             for word, freq in words.iteritems():
                 if self.idf.has_key(word):
                     self.idf[word] += 1
@@ -27,7 +28,7 @@ class Documents:
 
                 if not self.posting.has_key(word):
                     self.posting[word] = {}
-                self.posting[word][file] = freq
+                self.posting[word][filename] = freq
         # self.idf = { term: log(self.N/dft) for term, dft in self.idf.iteritems() }
 
     def dump(self):

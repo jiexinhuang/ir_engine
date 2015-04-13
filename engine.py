@@ -5,8 +5,7 @@ from math import log
 from math import sqrt
 
 class Engine:
-    def __init__(self, result_length):
-        self.result_length = result_length
+    def __init__(self):
         # Load all pkl files into memery to indexing
         posting_pkl = open('posting.pkl', 'rb')
         self.posting = pickle.load(posting_pkl)

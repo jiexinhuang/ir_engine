@@ -17,7 +17,7 @@ for query in query_file:
         if title:
             value = title.group(1).strip()
     if key:
-        queries[key] = value
+        queries[int(key)] = value
 
 query_pickle = open('query.pkl', 'wb')
 pickle.dump(queries, query_pickle)
