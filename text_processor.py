@@ -25,3 +25,6 @@ def stemming(word):
 
 def lowercase(word):
     return word.lower()
+
+def normalization(values):
+    return reduce(lambda x, y: x+y*y, values)
