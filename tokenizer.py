@@ -21,7 +21,7 @@ def stemming(word):
 def lowercase(word):
   return word.lower()
 
-proj_root = '/Users/jiejingdu/Unimelb/ir_proj1/'
+proj_root = '/home/jason/ir_engine/'
 document_root = proj_root + 'small'
 
 # Use tokenizer to remove puntuations

@@ -2,3 +2,4 @@ blogs/
 small/
 *.pyc
 *.swp
+*.pkl
