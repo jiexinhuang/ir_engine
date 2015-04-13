@@ -4,7 +4,7 @@ from text_processor import process
 from math import log
 from math import sqrt
 
-class QueryRunner:
+class Engine:
     def __init__(self, result_length):
         self.result_length = result_length
         # Load all pkl files into memery to indexing
@@ -36,6 +36,3 @@ class QueryRunner:
                     else:
                         result[document] = dft*idft
         return [ (doc, result[doc]) for doc in sorted(result, key=result.get, reverse=True)]
-
-qr = QueryRunner(20)
-qr.search('penguin')

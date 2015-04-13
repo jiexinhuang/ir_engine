@@ -1,5 +1,5 @@
 import pickle
-from query_runner import QueryRunner
+from engine import Engine
 
 query_pkl = open('query.pkl', 'rb')
 queries = pickle.load(query_pkl)
