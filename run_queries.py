@@ -14,9 +14,10 @@ engine = Engine()
 query_eval = {}
 
 for query_id, terms in queries.iteritems():
-  result = engine.search('terms')
+  result = engine.search(terms)
+  docs = [ doc for doc, score in result ]
   qrel = qrels[query_id]
-  evaluation = [ doc in qrel for doc, score in result ]
+  evaluation = [ doc in qrel for doc in docs ]
   query_eval[query_id] = evaluation
 
 
