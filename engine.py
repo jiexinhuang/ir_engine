@@ -21,7 +21,7 @@ class Engine:
         idf_pkl.close()
         file_length_pkl.close()
 
-    def search(self, query):
+    def search(self, query, k):
         result = {}
         terms = process(query)
         for term, qtf in terms.iteritems():
@@ -34,4 +34,4 @@ class Engine:
                         result[document] += dft*idft
                     else:
                         result[document] = dft*idft
-        return [ (doc, result[doc]) for doc in sorted(result, key=result.get, reverse=True)]
+        return sorted(result, key=result.get, reverse=True)[0:k]

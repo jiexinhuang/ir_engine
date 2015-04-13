@@ -14,12 +14,10 @@ engine = Engine()
 query_eval = {}
 
 for query_id, terms in queries.iteritems():
-  result = engine.search(terms)
-  docs = [ doc for doc, score in result ]
+  result = engine.search(terms, 100)
   qrel = qrels[query_id]
-  evaluation = [ doc in qrel for doc in docs ]
+  evaluation = [ doc in qrel for doc in result ]
   query_eval[query_id] = evaluation
-
 
 eval_pickle = open('queries_eval.pkl', 'wb')
 pickle.dump(query_eval, eval_pickle)
