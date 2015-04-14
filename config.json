@@ -1,4 +1,5 @@
 { 
+  "blogs_root": "/home/jason/ir_engine/blogs",
   "stopping": true,
   "stemming": true,
   "lemmatization": false

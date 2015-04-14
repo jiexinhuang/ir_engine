@@ -4,6 +4,12 @@ from nltk.corpus import PlaintextCorpusReader
 from text_processor import process
 from text_processor import normalization
 import pickle
+import hashlib
+
+# Generate long integer document id with hexdigest
+def getDocId(filename):
+    digest = hashlib.md5(filename).hexdigest()
+    return int(digest, 16)
 
 class Documents:
     def __init__(self, root):

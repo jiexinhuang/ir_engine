@@ -1,7 +1,6 @@
 from documents import Documents
+from config import settings
 
-root = '/home/jason/ir_engine/blogs'
-
-documents = Documents(root)
+documents = Documents(settings['blogs_root'])
 documents.process()
 documents.dump()
