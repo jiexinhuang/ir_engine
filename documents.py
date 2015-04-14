@@ -14,11 +14,14 @@ class Documents:
         self.posting = {}
         self.idf = {}
         self.file_length = {}
+        self.file_id_names = {}
         self.N = len(self.files.fileids())
 
     def process(self):
         for idx, file in enumerate(self.files.fileids()):
+            print idx
             filename = file.strip('.txt')
+            self.file_id_names[idx] = filename
             text = self.files.raw(file)
             words = process(text)
             if words.values():
@@ -32,16 +35,20 @@ class Documents:
                 if not self.posting.has_key(word):
                     self.posting[word] = {}
                 self.posting[word][idx] = freq
+        for word, idf in self.idf.iteritems():
+            self.posting[word]['idf'] = idf
 
     def dump(self):
         posting_pickle = open('posting.pkl', 'wb')
+        for term, value in self.posting.iteritems():
+          self.posting[term] = str(value)
         pickle.dump(self.posting, posting_pickle, 2)
         posting_pickle.close()
-
-        idf_pickle = open('idf.pkl', 'wb')
-        pickle.dump(self.idf, idf_pickle, 2)
-        idf_pickle.close()
 
         length_pickle = open('file_length.pkl', 'wb')
         pickle.dump(self.file_length, length_pickle, 2)
         length_pickle.close()
+
+        file_ids_pickle = open('file_ids.pkl', 'wb')
+        pickle.dump(self.file_id_names, file_ids_pickle, 2)
+        file_ids_pickle.close()

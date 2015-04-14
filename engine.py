@@ -10,28 +10,31 @@ class Engine:
         posting_pkl = open('posting.pkl', 'rb')
         self.posting = pickle.load(posting_pkl)
 
-        idf_pkl = open('idf.pkl', 'rb')
-        self.idfs = pickle.load(idf_pkl)
-        self.N = len(self.idfs)
+        ids_pkl = open('file_ids.pkl', 'rb')
+        self.id_names = pickle.load(ids_pkl)
+
+        self.N = len(self.posting)
 
         file_length_pkl = open('file_length.pkl', 'rb')
         self.file_length = pickle.load(file_length_pkl)
 
+        ids_pkl.close()
         posting_pkl.close()
-        idf_pkl.close()
         file_length_pkl.close()
 
     def search(self, query, k):
         result = {}
         terms = process(query)
         for term, qtf in terms.iteritems():
-            if self.idfs.has_key(term):
-                idft = log(self.N/self.idfs[term])
-                for document, dft in self.posting[term].iteritems():
+            if self.posting.has_key(term):
+                doc_list = eval(self.posting[term])
+                idft = log(self.N/(doc_list.pop('idf')))
+                for document, dft in doc_list.iteritems():
                     normalization = sqrt(self.file_length[document])
                     dft = dft/normalization
                     if result.has_key(document):
                         result[document] += dft*idft
                     else:
                         result[document] = dft*idft
-        return sorted(result, key=result.get, reverse=True)[0:k]
+        result_ids = sorted(result, key=result.get, reverse=True)[0:k]
+        return [self.id_names[idx] for idx in result_ids]
