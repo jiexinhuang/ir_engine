@@ -1,0 +1,13 @@
+//    options       |   Description
+// ----------       |   -------------    
+//  stopping        |   Whether to remove stopping words
+//  stemming        |   Whether to use word stemming (PorterStemmer used)
+//  lemmatization   |   Whether to use lemmatizer on words (WordNetLemmatizer used)
+//  max_result      |   Max numbers of results returned by engine
+//
+//
+{ 
+  "stopping": true,
+  "stemming": true,
+  "lemmatization": false
+} 

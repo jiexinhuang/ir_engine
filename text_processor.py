@@ -4,6 +4,7 @@ from nltk.stem import WordNetLemmatizer
 from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
 from nltk.probability import FreqDist 
+from config import settings
 
 tokenizer = RegexpTokenizer(r'\w+')
 lemmatizer = WordNetLemmatizer()
