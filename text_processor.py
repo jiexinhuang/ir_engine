@@ -27,5 +27,8 @@ def stemming(word):
 def lowercase(word):
     return word.lower()
 
+def lemmatize(word):
+    return lemmatizer.lemmatize(word)
+
 def normalization(values):
     return reduce(lambda x, y: x+y*y, values)
