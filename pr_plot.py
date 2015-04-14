@@ -1,6 +1,8 @@
 from __future__ import division
+from query_eval import PR
 import cPickle as pickle
 import matplotlib.pyplot as plt
+import sys
 
 eval_pkl = open('queries_eval.pkl', 'rb')
 evaluation = pickle.load(eval_pkl)
@@ -10,35 +12,19 @@ qrel_pkl = open('qrel.pkl', 'rb')
 qrels = pickle.load(qrel_pkl)
 qrel_pkl.close()
 
-class PR:
-# expect data to be list of Boolean value
-  def __init__(self, data, total_matches):
-    self.data = data
-    self.total = total_matches
-    self.N = len(data)
+for query_id in evaluation.keys():
+  pr = PR(evaluation[query_id], len(qrels[query_id]))
+  print pr.map_score()
+# offset = int(sys.argv[1])
 
-  def precision(self, n):
-    return self.matches(n)/n
+# color_list = ['y', 'm', 'c', 'r', 'g', 'b', 'w', 'k']
+# for query_id in range(8):
+#   color = color_list[query_id]
+#   query_id += offset
+#   pr = PR(evaluation[query_id], len(qrels[query_id]))
 
-  def recall(self, n):
-    return self.matches(n)/self.total
+#   plt.plot(pr.recall_list(), pr.precision_list(), color)
+#   plt.xlabel('Recall')
+#   plt.ylabel('Precision')
 
-  def matches(self, n):
-    return self.data[0:n].count(True)
-
-  def precision_list(self):
-    return [ self.precision(n) for n in range(1, self.N) ]
-
-  def recall_list(self):
-    return [ self.recall(n) for n in range(1, self.N) ]
-
-  def f_score(self, n):
-    p = self.precision(n)
-    r = self.recall(n)
-    return 2*p*r/(p+r)
-
-
-pr = PR(evaluation[851], len(qrels[851]))
-
-# plt.plot(pr.recall_list(), pr.precision_list())
 # plt.show()
