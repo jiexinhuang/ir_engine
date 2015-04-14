@@ -5,6 +5,9 @@ from text_processor import process
 from text_processor import normalization
 import cPickle as pickle
 
+def indices(li, elem):
+    return [i for i, x in enumerate(li) if x == elem]
+
 class Documents:
     def __init__(self, root):
         self.files = PlaintextCorpusReader(root, '.*\.txt')
@@ -29,7 +32,6 @@ class Documents:
                 if not self.posting.has_key(word):
                     self.posting[word] = {}
                 self.posting[word][idx] = freq
-        # self.idf = { term: log(self.N/dft) for term, dft in self.idf.iteritems() }
 
     def dump(self):
         posting_pickle = open('posting.pkl', 'wb')

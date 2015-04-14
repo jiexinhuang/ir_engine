@@ -1,5 +1,5 @@
 { 
-  "blogs_root": "/home/jason/ir_engine/blogs",
+  "blogs_root": "/home/jason/ir_engine/small",
   "stopping": true,
   "stemming": true,
   "lemmatization": false

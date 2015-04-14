@@ -50,6 +50,8 @@ term      | list
 - Try avoid save document_id as long stream?
 Use index of document as id
 extra storage required for index from id to real document name
+term      | list
+'kid'     | {1: 2, 2: 3 }
 
 For each term, a list of documents that contains this term is stored.
 For word queries, document id and term frequency in the document.

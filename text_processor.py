@@ -11,8 +11,8 @@ lemmatizer = WordNetLemmatizer()
 stemmer = PorterStemmer()
 stops = stopwords.words('english')
 
-def process(file):
-    words = tokenizer.tokenize(file)
+def process(text):
+    words = tokenizer.tokenize(text)
     words = map(lowercase, words)
     words = map(stemming, words)
     words = filter(stopping, words)
