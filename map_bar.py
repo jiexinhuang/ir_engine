@@ -16,8 +16,8 @@ id_ranges = range(851, 901)
 scores = [ PR(evaluation[query_id], len(qrels[query_id])).map_score() for query_id in id_ranges ]
 print sum(scores)/50
 
-plt.plot(id_ranges, scores)
-plt.show()
+# plt.plot(id_ranges, scores)
+# plt.show()
 
 # offset = int(sys.argv[1])
 
