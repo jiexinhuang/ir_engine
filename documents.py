@@ -1,8 +1,7 @@
 # Create bag of words representation of documents
 from __future__ import division
 from nltk.corpus import PlaintextCorpusReader
-from text_processor import process
-from text_processor import normalization
+import text_processor
 import cPickle as pickle
 
 def indices(li, elem):
@@ -20,9 +19,10 @@ class Documents:
         for idx, file in enumerate(self.files.fileids()):
             filename = file.strip('.txt')
             text = self.files.raw(file)
-            words = process(text)
+            words = text_processor.process(text)
+            raw_words = text_processor.raw_process(text)
             if words.values():
-                self.file_length[idx] = normalization(words.values())
+                self.file_length[idx] = text_processor.normalization(words.values())
             for word, freq in words.iteritems():
                 if self.idf.has_key(word):
                     self.idf[word] += 1
@@ -31,7 +31,7 @@ class Documents:
 
                 if not self.posting.has_key(word):
                     self.posting[word] = {}
-                self.posting[word][idx] = freq
+                self.posting[word][idx] = indices(raw_words, word)
 
     def dump(self):
         posting_pickle = open('posting.pkl', 'wb')
