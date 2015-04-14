@@ -12,6 +12,9 @@ stemmer = PorterStemmer()
 stops = stopwords.words('english')
 
 def process(text):
+    return FreqDist(raw_process(text))
+
+def raw_process(text):
     words = tokenizer.tokenize(text)
     words = map(lowercase, words)
     if settings['stemming']:
@@ -20,8 +23,7 @@ def process(text):
       words = map(lemmatize, words)
     if settings['stopping']:
         words = filter(stopping, words)
-
-    return FreqDist(words)
+    return words
 
 def stopping(word):
     return len(word) > 1 and word not in stops

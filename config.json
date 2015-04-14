@@ -1,4 +1,5 @@
 { 
+  "phrase_query": true,
   "blogs_root": "/Users/jiejingdu/Unimelb/ir_proj1/blogs",
   "stopping": true,
   "stemming": true,
