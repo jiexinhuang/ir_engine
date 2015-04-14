@@ -12,19 +12,16 @@ qrel_pkl = open('qrel.pkl', 'rb')
 qrels = pickle.load(qrel_pkl)
 qrel_pkl.close()
 
-for query_id in evaluation.keys():
+offset = int(sys.argv[1])
+
+color_list = ['y', 'm', 'c', 'r', 'g', 'b', 'w', 'k']
+for query_id in range(8):
+  color = color_list[query_id]
+  query_id += offset
   pr = PR(evaluation[query_id], len(qrels[query_id]))
-  print pr.map_score()
-# offset = int(sys.argv[1])
 
-# color_list = ['y', 'm', 'c', 'r', 'g', 'b', 'w', 'k']
-# for query_id in range(8):
-#   color = color_list[query_id]
-#   query_id += offset
-#   pr = PR(evaluation[query_id], len(qrels[query_id]))
+  plt.plot(pr.recall_list(), pr.precision_list(), color)
+  plt.xlabel('Recall')
+  plt.ylabel('Precision')
 
-#   plt.plot(pr.recall_list(), pr.precision_list(), color)
-#   plt.xlabel('Recall')
-#   plt.ylabel('Precision')
-
-# plt.show()
+plt.show()

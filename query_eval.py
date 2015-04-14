@@ -24,11 +24,14 @@ class PR:
     return [ self.recall(n) for n in range(1, self.N) ]
 
   def map_score(self):
-    total_p = 0
-    for n in range(self.N):
-      if self.data[n]:
-        total_p += self.precision(n+1)
-    return total_p/self.matches_found
+    if self.matches_found==0:
+      return 0
+    else:
+      total_p = 0
+      for n in range(self.N):
+        if self.data[n]:
+          total_p += self.precision(n+1)
+      return total_p/self.matches_found
 
   def f_score(self, n):
     p = self.precision(n)
