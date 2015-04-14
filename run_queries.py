@@ -1,4 +1,4 @@
-import pickle
+import cPickle as pickle
 from engine import Engine
 
 query_pkl = open('query.pkl', 'rb')

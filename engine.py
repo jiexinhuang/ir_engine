@@ -1,5 +1,5 @@
 from __future__ import division
-import pickle
+import cPickle as pickle
 from text_processor import process
 from math import log
 from math import sqrt

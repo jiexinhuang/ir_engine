@@ -48,9 +48,8 @@ term      | list
 'kid'     | {'BLOG06-20060207-023-0034160690': 1, 'BLOG06-20060221-017-0014443773': 1 }
 
 - Try avoid save document_id as long stream?
-Use md5 of document name and convert to integer
-Store reverse index from digest to real document name
-
+Use index of document as id
+extra storage required for index from id to real document name
 
 For each term, a list of documents that contains this term is stored.
 For word queries, document id and term frequency in the document.

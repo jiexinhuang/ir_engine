@@ -1,5 +1,5 @@
 from __future__ import division
-import pickle
+import cPickle as pickle
 import matplotlib.pyplot as plt
 
 eval_pkl = open('queries_eval.pkl', 'rb')

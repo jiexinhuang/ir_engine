@@ -1,5 +1,5 @@
 import re
-import pickle
+import cPickle as pickle
 
 query_file = open('06.topics.851-900.txt', 'r').read().split('<top>')
 
@@ -20,7 +20,7 @@ for query in query_file:
         queries[int(key)] = value
 
 query_pickle = open('query.pkl', 'wb')
-pickle.dump(queries, query_pickle)
+pickle.dump(queries, query_pickle, 2)
 
 query_pickle.close()
 
@@ -41,6 +41,6 @@ for line in qrel_file:
             relations[query_id] = [document_id]
 
 qrel_pickle = open('qrel.pkl', 'wb')
-pickle.dump(relations, qrel_pickle)
+pickle.dump(relations, qrel_pickle, 2)
 
 qrel_pickle.close()
