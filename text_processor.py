@@ -14,8 +14,13 @@ stops = stopwords.words('english')
 def process(text):
     words = tokenizer.tokenize(text)
     words = map(lowercase, words)
-    words = map(stemming, words)
-    words = filter(stopping, words)
+    if settings['stemming']:
+      words = map(stemming, words)
+    if settings['lemmatization']:
+      words = map(lemmatize, words)
+    if settings['stopping']:
+        words = filter(stopping, words)
+
     return FreqDist(words)
 
 def stopping(word):
