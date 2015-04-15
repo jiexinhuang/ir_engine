@@ -46,9 +46,15 @@ class Engine:
     # check all terms in dictionary before do phrase search
     # check more than one word in term
     def phrase_search(self, query):
+        self.term_lists = {}
         result_ids = []
         terms = raw_process(query)
         head, tail = terms[0], terms[1:]
+
+        for term in tail:
+            term_list = eval(self.posting[term])
+            term_list.pop('idf')
+            self.term_lists[term] = term_list
 
         head_list = eval(self.posting[head])
         head_list.pop('idf')
@@ -63,7 +69,7 @@ class Engine:
     def match_tail(self, tail, doc_id, position):
         matching_flag = True
         for idx, term in enumerate(tail):
-            term_list = eval(self.posting[term])
+            term_list = self.term_lists[term]
             if term_list.has_key(doc_id):
                 term_positions = term_list[doc_id]
                 if (position+idx+1) not in term_positions:
