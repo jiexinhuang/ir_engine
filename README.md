@@ -14,12 +14,13 @@ Python 2.7, with the following third party packages:
 Get started:
 * You should have extracted this archive when you read this.
 * copy proj1data.zip to the project root directory
-* unzip proj1data.zip and the engine.
+* unzip proj1data.zip.
 * (optional)preprocess the corpus, with 
     `python preprocessing.py`
   proprocessed file in pickle format is already included in this package, with default settings in config.json. It is OK to skip this step if using the engine with default settings.
   This step is relatively slow, depending on speed of computer. However, turn off phrase_query support will accelerate this process significantly.
 * Default settings has phrase_query switched on 
+* More corpus could be added under blogs directory
 
 Configuration:
 modify config.json to change strategies used by the engine.
