@@ -1,6 +1,6 @@
 { 
   "phrase_query": true,
-  "blogs_root": "/Users/jiejingdu/Unimelb/ir_proj1/blogs",
+  "blogs_root": "/home/jason/ir_engine/blogs",
   "stopping": true,
   "stemming": true,
   "lemmatization": false

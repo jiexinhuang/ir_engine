@@ -1,6 +1,7 @@
 from __future__ import division
 import cPickle as pickle
 from text_processor import process
+from config import settings
 from math import log
 from math import sqrt
 
@@ -31,6 +32,8 @@ class Engine:
                 idft = log(self.N/(doc_list.pop('idf')))
                 for document, dft in doc_list.iteritems():
                     normalization = sqrt(self.file_length[document])
+                    if settings['phrase_query']:
+                        dft = len(dft)
                     dft = dft/normalization
                     if result.has_key(document):
                         result[document] += dft*idft
