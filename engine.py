@@ -43,7 +43,7 @@ class Engine:
         result_ids = sorted(result, key=result.get, reverse=True)[0:k]
         return [self.id_names[idx] for idx in result_ids]
 
-    def phrase_search(self, query):
+    def phrase_search(self, query, k):
         if self.valid_phrase(query):
             self.term_lists = {}
             result_ids = []
@@ -62,7 +62,15 @@ class Engine:
                     if self.match_tail(tail, doc_id, position):
                         result_ids.append(doc_id)
                         break
-            return [self.id_names[idx] for idx in result_ids]
+
+            word_search_result = self.search(query, None)
+            unsorted_result = [self.id_names[idx] for idx in result_ids]
+            result = []
+
+            for doc_name in word_search_result:
+                if doc_name in unsorted_result:
+                    result.append(doc_name)
+            return result[0:k]
         else:
             return []
 
