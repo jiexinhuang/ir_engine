@@ -1,6 +1,7 @@
 from __future__ import division
 import cPickle as pickle
 from text_processor import process
+from text_processor import raw_process
 from config import settings
 from math import log
 from math import sqrt
@@ -41,3 +42,32 @@ class Engine:
                         result[document] = dft*idft
         result_ids = sorted(result, key=result.get, reverse=True)[0:k]
         return [self.id_names[idx] for idx in result_ids]
+
+    # check all terms in dictionary before do phrase search
+    # check more than one word in term
+    def phrase_search(self, query):
+        result_ids = []
+        terms = raw_process(query)
+        head, tail = terms[0], terms[1:]
+
+        head_list = eval(self.posting[head])
+        head_list.pop('idf')
+        for doc_id, positions in head_list.iteritems():
+            for position in positions:
+                if self.match_tail(tail, doc_id, position):
+                    result_ids.append(doc_id)
+                    break
+
+        return [self.id_names[idx] for idx in result_ids]
+            
+    def match_tail(self, tail, doc_id, position):
+        matching_flag = True
+        for idx, term in enumerate(tail):
+            term_list = eval(self.posting[term])
+            if term_list.has_key(doc_id):
+                term_positions = term_list[doc_id]
+                if (position+idx+1) not in term_positions:
+                    matching_flag = False
+            else:
+                matching_flag = False
+        return matching_flag
