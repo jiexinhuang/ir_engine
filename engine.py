@@ -43,28 +43,37 @@ class Engine:
         result_ids = sorted(result, key=result.get, reverse=True)[0:k]
         return [self.id_names[idx] for idx in result_ids]
 
-    # check all terms in dictionary before do phrase search
-    # check more than one word in term
     def phrase_search(self, query):
-        self.term_lists = {}
-        result_ids = []
+        if self.valid_phrase(query):
+            self.term_lists = {}
+            result_ids = []
+            terms = raw_process(query)
+            head, tail = terms[0], terms[1:]
+
+            for term in tail:
+                term_list = eval(self.posting[term])
+                term_list.pop('idf')
+                self.term_lists[term] = term_list
+
+            head_list = eval(self.posting[head])
+            head_list.pop('idf')
+            for doc_id, positions in head_list.iteritems():
+                for position in positions:
+                    if self.match_tail(tail, doc_id, position):
+                        result_ids.append(doc_id)
+                        break
+            return [self.id_names[idx] for idx in result_ids]
+        else:
+            return []
+
+    # check more than one word in term
+    # check all terms in dictionary before do phrase search
+    def valid_phrase(self, query):
+        dictionary = self.posting.keys()
         terms = raw_process(query)
-        head, tail = terms[0], terms[1:]
-
-        for term in tail:
-            term_list = eval(self.posting[term])
-            term_list.pop('idf')
-            self.term_lists[term] = term_list
-
-        head_list = eval(self.posting[head])
-        head_list.pop('idf')
-        for doc_id, positions in head_list.iteritems():
-            for position in positions:
-                if self.match_tail(tail, doc_id, position):
-                    result_ids.append(doc_id)
-                    break
-
-        return [self.id_names[idx] for idx in result_ids]
+        terms_in_dic = [ term in dictionary for term in terms]
+        all_terms_in_dic = reduce(lambda a, b: a and b, terms_in_dic, True)
+        return len(terms)>1 and all_terms_in_dic
             
     def match_tail(self, tail, doc_id, position):
         matching_flag = True
